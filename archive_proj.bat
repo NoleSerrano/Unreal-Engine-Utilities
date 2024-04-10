@@ -13,7 +13,9 @@ if exist "%ProjectDir%\Source" xcopy "%ProjectDir%\Source" "%ProjectDir%\%TempDi
 xcopy "%ProjectDir%\Config" "%ProjectDir%\%TempDir%\Config\" /E /I /Q
 copy "%ProjectDir%\*.uproject" "%ProjectDir%\%TempDir%\" >nul
 
-set "ZipFile=%ProjectDir%\%ProjectName%.zip"
+for /f "tokens=2 delims==" %%I in ('wmic OS Get localdatetime /value') do set "currenttime=%%I"
+set "ZipFile=%ProjectDir%\%ProjectName%_%currenttime:~4,2%_%currenttime:~6,2%_%currenttime:~0,4%_%currenttime:~8,2%_%currenttime:~10,2%_%currenttime:~12,2%.zip"
+
 cd "%ProjectDir%\%TempDir%"
 powershell -Command "Compress-Archive -Path '*' -DestinationPath '%ZipFile%' -Force"
 cd "%ProjectDir%"
