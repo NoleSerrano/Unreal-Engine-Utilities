@@ -12,13 +12,14 @@ xcopy "%ProjectDir%\Content" "%ProjectDir%\%TempDir%\Content\" /E /I /Q
 if exist "%ProjectDir%\Source" xcopy "%ProjectDir%\Source" "%ProjectDir%\%TempDir%\Source\" /E /I /Q
 xcopy "%ProjectDir%\Config" "%ProjectDir%\%TempDir%\Config\" /E /I /Q
 if exist "%ProjectDir%\.git" xcopy "%ProjectDir%\.git" "%ProjectDir%\%TempDir%\.git\" /E /I /H /Q
+if exist "%ProjectDir%\.gitignore" copy "%ProjectDir%\.gitignore" "%ProjectDir%\%TempDir%\" >nul
 copy "%ProjectDir%\*.uproject" "%ProjectDir%\%TempDir%\" >nul
 
 for /f "tokens=2 delims==" %%I in ('wmic OS Get localdatetime /value') do set "currenttime=%%I"
 set "ZipFile=%ProjectDir%\%ProjectName%_%currenttime:~4,2%_%currenttime:~6,2%_%currenttime:~0,4%_%currenttime:~8,2%_%currenttime:~10,2%_%currenttime:~12,2%.zip"
 
 cd "%ProjectDir%\%TempDir%"
-powershell -Command "Compress-Archive -Path '*' -DestinationPath '%ZipFile%' -Force"
+"C:\Program Files\7-Zip\7z.exe" a -tzip "%ZipFile%" * -r
 cd "%ProjectDir%"
 
 echo Project archived to: %ZipFile%
