@@ -11,6 +11,7 @@ if not exist "%ProjectDir%\%TempDir%" mkdir "%ProjectDir%\%TempDir%"
 xcopy "%ProjectDir%\Content" "%ProjectDir%\%TempDir%\Content\" /E /I /Q
 if exist "%ProjectDir%\Source" xcopy "%ProjectDir%\Source" "%ProjectDir%\%TempDir%\Source\" /E /I /Q
 xcopy "%ProjectDir%\Config" "%ProjectDir%\%TempDir%\Config\" /E /I /Q
+if exist "%ProjectDir%\.git" xcopy "%ProjectDir%\.git" "%ProjectDir%\%TempDir%\.git\" /E /I /H /Q
 copy "%ProjectDir%\*.uproject" "%ProjectDir%\%TempDir%\" >nul
 
 for /f "tokens=2 delims==" %%I in ('wmic OS Get localdatetime /value') do set "currenttime=%%I"
